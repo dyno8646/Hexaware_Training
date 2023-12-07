@@ -1,1 +1,76 @@
+Schema:
 
+---------------------------------------Case Study:  Virtual Art Gallery---------------------------------------------
+
+
+-- Artwork Table
+CREATE TABLE Artwork (
+	Artwork_ID INT PRIMARY KEY,
+	Title NVARCHAR(100) NOT NULL,
+	Description NVARCHAR(MAX),
+	Creation_Date DATE,
+	Medium NVARCHAR(100),
+	Image_URL NVARCHAR(MAX),
+	Artist_ID INT FOREIGN KEY REFERENCES Artist(Artist_ID)
+);
+
+-- Artist Table
+CREATE TABLE Artist (
+	Artist_ID INT PRIMARY KEY,
+	Name NVARCHAR(255) NOT NULL,
+	Biography NVARCHAR(MAX),
+	BirthDate DATE,
+	Nationality NVARCHAR(100),
+	Website NVARCHAR(MAX),
+	Contact_Information NVARCHAR(MAX)
+);
+
+-- User Table
+CREATE TABLE Users (
+	User_ID INT PRIMARY KEY,
+	Username NVARCHAR(50) NOT NULL,
+	Password NVARCHAR(50) NOT NULL,
+	Email NVARCHAR(50) NOT NULL,
+	First_Name NVARCHAR(50),
+	Last_Name NVARCHAR(50),
+	Date_Of_Birth DATE,
+	Profile_Picture NVARCHAR(MAX),
+	CONSTRAINT CK_User_Password CHECK (LEN(Password) >= 8), -- Example check for password length
+	CONSTRAINT CK_User_Email CHECK (Email LIKE '%@%.%') -- Example check for email format
+);
+
+-- Gallery Table
+CREATE TABLE Gallery (
+	Gallery_ID INT PRIMARY KEY,
+	Name NVARCHAR(50) NOT NULL,
+	Description NVARCHAR(MAX),
+	Location NVARCHAR(50),
+	Curator INT FOREIGN KEY REFERENCES Artist(Artist_ID),
+	OpeningHours NVARCHAR(MAX)
+);
+
+-- User_Favorite_Artwork Junction Table
+CREATE TABLE User_Favorite_Artwork (
+	User_ID INT,
+	Artwork_ID INT,
+	PRIMARY KEY (User_ID, Artwork_ID),
+	FOREIGN KEY (User_ID) REFERENCES Users(User_ID),
+	FOREIGN KEY (Artwork_ID) REFERENCES Artwork(Artwork_ID)
+);
+
+-- Artwork_Gallery Junction Table
+CREATE TABLE Artwork_Gallery (
+	Artwork_ID INT,
+	Gallery_ID INT,
+	PRIMARY KEY (Artwork_ID, Gallery_ID),
+	FOREIGN KEY (Artwork_ID) REFERENCES Artwork(Artwork_ID),
+  FOREIGN KEY (Gallery_ID) REFERENCES Gallery(Gallery_ID)
+);
+
+
+SELECT * FROM Artwork;
+SELECT * FROM Artist;
+SELECT * FROM Users;
+SELECT * FROM Gallery;
+SELECT * FROM User_Favorite_Artwork;
+SELECT * FROM Artwork_Gallery;
