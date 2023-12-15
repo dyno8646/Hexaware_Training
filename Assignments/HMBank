@@ -38,7 +38,13 @@ Database Tables
 • amount 
 • transaction_date 
 */
--------------------    Tasks 1: Database Design
+
+
+
+----------------------------------------Tasks 1: Database Design----------------------------------------------------
+
+
+
 /*
 -- 1. Create the database named "HMBank" 
 CREATE DATABASE HMBank;
@@ -82,7 +88,7 @@ SELECT * FROM Accounts;
 SELECT * FROM Transactions;
 
 
--------------------    Tasks 2: Select, Where, Between, AND, LIKE: 
+--------------------------------------Tasks 2: Select, Where, Between, AND, LIKE:----------------------------------------------------------- 
 
 
 -- 1. Insert at least 10 sample records into each of the following tables.   
@@ -188,7 +194,11 @@ VALUES
   (1037, 114, 'deposit', 15000.00, '2023-12-26'),
   (1038, 105, 'withdrawal', 8000.00, '2023-12-15');
 
+
+
 --------------------------------------------Write SQL queries for the following tasks:--------------------------------------------- 
+
+
 
 -- 1. Write a SQL query to retrieve the name, account type and email of all customers.
 
@@ -244,7 +254,7 @@ SELECT * FROM Accounts;
 SELECT * FROM Transactions;
 
 
------------------------------------  Tasks 3: Aggregate functions, Having, Order By, GroupBy and Joins: ---------------------------
+-----------------------------------------  Tasks 3: Aggregate functions, Having, Order By, GroupBy and Joins: ---------------------------
 
 
 -- 1. Write a SQL query to Find the average account balance for all customers.
@@ -314,7 +324,7 @@ SELECT * FROM Accounts;
 SELECT * FROM Transactions;
 
 
------------------------ --------------   Tasks 4: Subquery and its type: -----------------------------------------
+---------------------------------------------------------   Tasks 4: Subquery and its type: -----------------------------------------
 
 
 -- 1. Retrieve the customer(s) with the highest account balance. 
