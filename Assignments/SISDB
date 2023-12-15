@@ -4,6 +4,8 @@ ASSIGNMENT-2
 
 
 
+
+
 ---------------------------------------RDBMS Assignment: Student Information System (SIS)--------------------------------------------------
 
 /*
@@ -141,9 +143,9 @@ Here is the schema for the normalized Enrollments and CourseEnrollments tables:
 
 */
 
--- 4. Create an ERD (Entity Relationship Diagram) for the database.
+-- 4. Create an ERD (Entity Relationship Diagram) for the database. -------(ANSWERED IN Separate file)
 
--- 5. Create appropriate Primary Key and Foreign Key constraints for referential integrity.
+-- 5. Create appropriate Primary Key and Foreign Key constraints for referential integrity. -----(ANSWERED IN THE CODE)
 
 
 -------------------------------2. Data Definition Language (DDL): 
@@ -484,6 +486,11 @@ JOIN Courses C ON t.teacher_id = C.teacher_id
 LEFT JOIN Enrollments E ON C.course_id = E.course_id
 LEFT JOIN Payments P ON E.student_id = P.student_id
 GROUP BY t.teacher_id, t.first_name, t.last_name;
+--or
+SELECT t.teacher_id, t.first_name,
+(SELECT SUM(P.amount) FROM Payments P WHERE p.payment_id IN (
+Select course_id from Courses c where c.teacher_id = t.teacher_id)) AS total_payments
+FROM Teacher t;
 
 -- 5. Identify students who are enrolled in all available courses. Use subqueries to compare a student's enrollments with the total number of courses. 
 
@@ -504,6 +511,8 @@ FROM Students;
 
 SELECT c.course_id, c.course_name FROM Courses c
 LEFT JOIN Enrollments e ON c.course_id = e.course_id WHERE e.course_id IS NULL;
+--or
+SELECT c.course_id, c.course_name FROM Courses c WHERE NOT EXISTS(SELECT * FROM Enrollments e where e.course_id=c.course_id);
 
 -- 9. Calculate the total payments made by each student for each course they are enrolled in. Use subqueries and aggregate functions to sum payments.
 
@@ -512,8 +521,9 @@ JOIN Enrollments E ON S.student_id = E.student_id
 LEFT JOIN Payments P ON E.student_id = P.student_id
 GROUP BY S.student_id, CONCAT(S.first_name,'',S.last_name)
 Order BY TotalPayments DESC;
-
 --- to check --check student_id 8 --2courses
+SELECT S.student_id,(SELECT SUM(P.amount) From Payments P where S.student_id=P.student_id)AS TotalPayments FROM Students S
+Where S.student_id IN(Select distinct e.student_id from Enrollments e) order by TotalPayments desc;
 
 -- 10.Identify students who have made more than one payment. Use subqueries and aggregate functions to count payments per student and filter for those with counts greater than one.  
 
